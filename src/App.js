@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import React from 'react';
+import DialogWindow from './DialogWindow';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    questionText: 'What r u want from me? Clear?',
+    value: '',
+    isOpen: false
+  };
+  handleClear = () => {
+    this.setState({
+      value: ''
+    });
+  };
+  handleCancel = () => { 
+    this.setState({
+      isOpen: false
+    });
+  };
+  handleOpenWindow = () => {
+    this.setState({
+      isOpen: true
+    });
+  };
+  handleVal = (event) => this.setState({ value: event.target.value });
+  render() {
+    return (
+      <div>
+        <input type="text" value={this.state.value} onChange={this.handleVal}/>
+        <button onClick={() => this.handleOpenWindow()}>clear</button>
+        <DialogWindow questionText={this.state.questionText} handleClear={this.handleClear} handleCancel={this.handleCancel} isOpen={this.state.isOpen}/>
+      </div>
+    );
+  }
+  
 }
 
 export default App;
